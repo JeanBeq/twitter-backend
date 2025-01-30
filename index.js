@@ -13,7 +13,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use("/posts", postRoutes);
 app.use("/auth", authRoutes);
-app.use("/users", userRoutes); // Nouvelle route
+app.use("/users", userRoutes);
 
 const PORT = process.env.PORT || 5000;
 

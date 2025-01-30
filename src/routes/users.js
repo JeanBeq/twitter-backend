@@ -1,10 +1,10 @@
 const express = require("express");
 const User = require("../models/User");
 const Post = require("../models/post");
+const requireAuthentication = require("../middlewares/require-auth");
 const router = express.Router();
 
-// Récupérer les informations d'un utilisateur et ses posts
-router.get("/:username", async (req, res) => {
+router.get("/:username", requireAuthentication, async (req, res) => {
   const { username } = req.params;
 
   const user = await User.findOne({
