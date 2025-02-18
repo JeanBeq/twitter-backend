@@ -5,12 +5,13 @@ const bodyParser = require("body-parser");
 const { sequelize } = require("./src/models");
 const postRoutes = require("./src/routes/posts");
 const authRoutes = require("./src/routes/auth");
-const userRoutes = require("./src/routes/users"); // Nouvelle route
+const userRoutes = require("./src/routes/users");
 
 const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use("/uploads", express.static("uploads"));
 app.use("/posts", postRoutes);
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);

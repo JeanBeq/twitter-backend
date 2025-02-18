@@ -4,6 +4,7 @@ const User = require("./User");
 
 const Post = sequelize.define("Post", {
   content: { type: DataTypes.TEXT, allowNull: false },
+  photoUrl: { type: DataTypes.STRING, allowNull: true }, // Nouveau champ pour les photos
   created_at: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
 });
 
