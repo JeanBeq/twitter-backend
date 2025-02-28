@@ -1,8 +1,10 @@
 const express = require("express");
 const multer = require("multer");
 const path = require("path");
+const webpush = require("web-push");
 const Post = require("../models/post");
 const User = require("../models/User");
+const Subscription = require("../models/subscription");
 const requireAuthentication = require("../middlewares/require-auth");
 const router = express.Router();
 
@@ -54,6 +56,26 @@ router.post("/", requireAuthentication, upload.single("photo"), async (req, res)
     user: {
       username: req.user.username,
     },
+  });
+
+  // Envoyer une notification à tous les abonnés
+  const subscriptions = await Subscription.findAll();
+  const notificationPayload = JSON.stringify({
+    title: "Nouveau post",
+    body: `${req.user.username} a créé un nouveau post`,
+    type: "POST_CREATED",
+    url: `/posts/${newPost.id}`
+  });
+
+  subscriptions.forEach(subscription => {
+    const pushSubscription = {
+      endpoint: subscription.endpoint,
+      keys: subscription.keys,
+    };
+
+    webpush.sendNotification(pushSubscription, notificationPayload).catch(err => {
+      console.error("Error sending notification", err);
+    });
   });
 });
 
