@@ -27,6 +27,7 @@ webpush.setVapidDetails(
   process.env.VITE_PRIVATE_PUSH_KEY
 );
 
+// Synchroniser les modèles avec la base de données et démarrer le serveur
 sequelize.sync({ alter: true }).then(() => {
   console.log("Database connected");
   app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

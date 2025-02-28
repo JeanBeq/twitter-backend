@@ -4,6 +4,7 @@ const Post = require("../models/post");
 const requireAuthentication = require("../middlewares/require-auth");
 const router = express.Router();
 
+// Route pour récupérer les informations d'un utilisateur par nom d'utilisateur
 router.get("/:username", requireAuthentication, async (req, res) => {
   const { username } = req.params;
 
@@ -19,9 +20,11 @@ router.get("/:username", requireAuthentication, async (req, res) => {
   });
 
   if (!user) {
+    // Si l'utilisateur n'est pas trouvé, renvoyer une réponse 404
     return res.status(404).json({ error: "Utilisateur non trouvé" });
   }
 
+  // Renvoyer les informations de l'utilisateur et ses posts
   res.json({
     id: user.id,
     username: user.username,

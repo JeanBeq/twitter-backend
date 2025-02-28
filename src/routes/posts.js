@@ -47,6 +47,7 @@ router.post("/", requireAuthentication, upload.single("photo"), async (req, res)
 
   if (!content) return res.status(400).json({ error: "Champs manquants" });
 
+  // Créer un nouveau post
   const newPost = await Post.create({ userId: req.user.id, content, photoUrl });
   res.status(201).json({
     id: newPost.id,
